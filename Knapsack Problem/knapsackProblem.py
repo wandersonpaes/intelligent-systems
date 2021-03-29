@@ -1,4 +1,5 @@
 from geneticLibrary import *
+from matplotlib import pyplot as plt
 
 numItems = 3
 '''
@@ -28,3 +29,10 @@ for i in range(epochs):
 
 for fitness in fitnessHistory:
     print(fitness)
+
+plt.plot(range(len(fitnessHistory)), fitnessHistory)
+plt.grid(True, zorder=0)
+plt.title("Knapsack Problem")
+plt.xlabel("Generation")
+plt.ylabel("Average Fitness")
+plt.show()
