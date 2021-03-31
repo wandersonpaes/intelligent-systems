@@ -16,11 +16,11 @@ def createPopulation(numIndividual, length):
     return [ createIndividual(length) for x in range(numIndividual) ]
 
 #Function that determine the fitness of an individual. Higher is batter.
-def fitnessFunc(individual, itemsToBag, bagWeight):
+def fitnessFunc(individual, itemsToKnapsack, KnapsackWeight):
     sumWeight = 0
     sumValues = 0
-    weights = itemsToBag[0]
-    values = itemsToBag[1]
+    weights = itemsToKnapsack[0]
+    values = itemsToKnapsack[1]
     length = len(individual)
     #For invalid individual is given a low probability to your value
     lowProbability = (sum(x for x in weights))*0.01
@@ -30,7 +30,7 @@ def fitnessFunc(individual, itemsToBag, bagWeight):
             sumWeight+=weights[i]
             sumValues+=values[i]
 
-    if sumWeight <= bagWeight:
+    if sumWeight <= KnapsackWeight:
         if sumWeight==0:
             return lowProbability
         else:
@@ -39,19 +39,19 @@ def fitnessFunc(individual, itemsToBag, bagWeight):
         return lowProbability
 
 #Function that determine average fitness for a populatiton
-def averageFitnessFunc(population, itemsToBag, bagWeight):
+def averageFitnessFunc(population, itemsToKnapsack, KnapsackWeight):
     somaFitness = 0
 
     for elem in population:
-        somaFitness+=fitnessFunc(elem, itemsToBag, bagWeight)
+        somaFitness+=fitnessFunc(elem, itemsToKnapsack, KnapsackWeight)
 
     return somaFitness/(len(population)*1.0)
 
 #Function that evolve the population
-def evolve(population, itemsToBag, bagWeight, mutateRate=0.01):
+def evolve(population, itemsToKnapsack, KnapsackWeight, mutateRate=0.01):
     #Putting individual and your fitness in a matrix,
     #column 0 is the fitness number and column 1 is the individual
-    graded = [ (fitnessFunc(x,itemsToBag,bagWeight), x) for x in population ]
+    graded = [ (fitnessFunc(x,itemsToKnapsack,KnapsackWeight), x) for x in population ]
     #Fitness sum of all individual
     fitnessSum = sum(x[0] for x in graded)
     #Probability of each individual
